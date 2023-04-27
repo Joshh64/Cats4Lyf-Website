@@ -3,49 +3,42 @@ import styled from "styled-components";
 
 function About({ products }) {
     const [selectedProduct, setSelectedProduct] = useState(null);
-  
-    const handleClick = (products) => {
-      setSelectedProduct(products);
-    };
-  
-    const handleClose = () => {
-      setSelectedProduct(null);
-    };
-  
-    return (
-      <>
-        {products && products.length > 0 ? (
-          <>
-            <ProductsWrapper>
-              {products.map((products, index) => (
-                <ProductWrapper key={index} onClick={() => handleClick(products)}>
-                  <img src={products.image} alt={products.name} />
-                  <h3>{products.name}</h3>
-                  <p>{products.price}</p>
-                </ProductWrapper>
-              ))}
-            </ProductsWrapper>
-            {selectedProduct && <Modal products={selectedProduct} onClose={handleClose} />}
-          </>
-        ) : (
-          <div>No products found</div>
-        )}
-      </>
-    );
-  }
 
-const Modal = ({ products, onClose }) => {
+    const handleClick = (product) => {
+        setSelectedProduct(product);
+    };
+
+    const handleClose = () => {
+        setSelectedProduct(null);
+    };
+
+    return (
+        <div>
+            <h1>This is the About Page</h1>
+            <h2>Click on one of the cats to find out more about</h2>
+            <ProductsWrapper>
+                {products.map((product, index) => (
+                    <ProductWrapper key={index} onClick={() => handleClick(product)}>
+                    <img src={product.image} alt={product.name} />
+                    <h3>{product.name}</h3>
+                    </ProductWrapper>
+                ))}
+            </ProductsWrapper>
+            {selectedProduct && <Modal product={selectedProduct} onClose={handleClose} />}
+        </div>
+    );
+}
+
+const Modal = ({ product, onClose }) => {
     return (
         <ModalWrapper>
             <ModalContent>
                 <ModalHeader>
-                    <h2>{products.name}</h2>
+                    <h2>Name: {product.name}</h2>
                     <ModalCloseButton onClick={onClose}>X</ModalCloseButton>
                 </ModalHeader>
-                    <ModalImage src={products.image} alt={products.name} />
-                    <p>{products.description}</p>
-                    <p>Price: {products.price}</p>
-                    <p>Category: {products.category}</p>
+                    <ModalImage src={product.image} alt={product.name} />
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </ModalContent>
         </ModalWrapper>
     );
@@ -100,20 +93,31 @@ const ModalContent = styled.div`
     padding: 20px; 
     border-radius: 5px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 400px;
+    height: 500px;
 `
 
-const ModalHeader = styled.div` 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 10px;
+const ModalHeader = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-right: 30px;
 `
 
-const ModalCloseButton = styled.button` 
-    border: none; 
-    background-color: transparent; 
-    font-size: 20px; 
-    cursor: pointer;
+const ModalCloseButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  cursor: pointer;
 `
 
 const ModalImage = styled.img`

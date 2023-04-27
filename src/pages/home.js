@@ -3,17 +3,23 @@ import styled from "styled-components";
 
 function Home({ products }) {
     return (
-      <ProductsWrapper>
-        {products.map((product, index) => (
-          <ProductWrapper key={index}>
-            <img src={product.image} alt={product.name} />
-            <h3>{product.name}</h3>
-            <p>{product.price}</p>
-          </ProductWrapper>
+        <div>
+            <h1>This is the Home page</h1>
+            <h2>Here you can view the list of cats we have, along with their name, an adorable image of them and their price</h2>
+            <h2>To add the cat(s) to your basket, simply click on them</h2>
+            <h2>To find out more about the bundle of fur you're looking to adopt, check out their profile on the About page</h2>
+            <ProductsWrapper>
+                {products.map((product, index) => (
+                <ProductWrapper key={index}>
+                <img src={product.image} alt={product.name} />
+                <h3>{product.name}</h3>
+                <p>£{product.price}</p>
+            </ProductWrapper>
         ))}
-      </ProductsWrapper>
+            </ProductsWrapper>
+        </div>
     );
-  }
+}
   
 export default Home;
 
