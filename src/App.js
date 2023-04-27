@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import styled from "styled-components";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
+import './App.css';
 
-const App = () => {
+import Home from "./pages/home"
+import About from "./pages/about"
+
+function App() {
   const [products, setProducts] = useState([]);
-
-  const Product = ({ image, name, price }) => {
-    return (
-      <ProductWrapper>
-        <img src={image} alt={name} />
-        <h3>{name}</h3>
-        <p>£{price}</p>
-      </ProductWrapper>
-    );
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,43 +29,49 @@ const App = () => {
   }, []);
 
   return (
-    <ProductsWrapper>
-      {products.map((product, index) => (
-        <Product key={index} {...product} />
-      ))}
-    </ProductsWrapper>
+    <BrowserRouter>
+      <h1>Cats4Lyf</h1>
+
+      <NavBar>
+        <NavLinks>
+          <NavLink to="/home">Home</NavLink>
+          <NavLink to="/about">About</NavLink>
+        </NavLinks>
+      </NavBar>
+
+      <Routes>
+        <Route path="/home" element={<Home products={products} />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;
 
 // styled components
 
-const ProductsWrapper = styled.div`
+const NavBar = styled.nav`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
 `;
 
-const ProductWrapper = styled.div`
-  border: 1px solid black;
-  padding: 10px;
-  margin: 10px;
-  text-align: center;
+const NavLinks = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+`;
 
-  img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-  }
+const NavLink = styled(Link)`
+  font-size: 18px;
+  text-decoration: none;
+  color: #fff;
+  margin-left: 20px;
 
-  h3 {
-    margin-top: 10px;
-    font-size: 20px;
-  }
-
-  p {
-    margin-top: 5px;
-    font-size: 16px;
+  &:hover {
+    text-decoration: underline;
   }
 `;
