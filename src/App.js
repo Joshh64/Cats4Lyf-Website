@@ -10,6 +10,7 @@ import About from "./pages/about"
 function App() {
   const [products, setProducts] = useState([]);
   const [basket, setBasket] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +53,10 @@ function App() {
     return sum
   }
 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  }
+
   return (
     <div>
     <BrowserRouter>
@@ -61,6 +66,7 @@ function App() {
           <NavLinks>
             <NavLink to="/home">Home</NavLink>
             <NavLink to="/about">About</NavLink>
+            <NavLink onClick={toggleModal}>Basket</NavLink>
           </NavLinks>
         </NavBar>
 
@@ -79,6 +85,23 @@ function App() {
         ))}
         <p>Total: £{sumBasket()}</p>
       </BasketContainer>
+        {showModal && (
+          <ModalContainer>
+            <ModalContent>
+              <BasketContainer>
+                {basket.map((item, index) => (
+                  <BasketItem key={index}>
+                    <ProductImage className="basket-image" src={products[item].image} alt={products[item].name} />
+                    <ProductName>{products[item].name}</ProductName>
+                    <ProductPrice>£{products[item].price}</ProductPrice>
+                  </BasketItem>
+                ))}
+                <p>Total: £{sumBasket()}</p>
+              </BasketContainer>
+              <CloseButton onClick={toggleModal}>X</CloseButton>
+            </ModalContent>
+          </ModalContainer>
+        )}
     </BrowserRouter>
   </div>
 );}
@@ -126,6 +149,16 @@ const ProductImage = styled.img`
   height: 100px; 
   object-fit: cover;
 `
+
+const ModalContainer = styled.div`
+`
+
+const ModalContent = styled.div`
+`
+
+const CloseButton = styled.button`
+`
+
 const BasketContainer = styled.div`
   display: flex; 
   flex-direction: column; 
