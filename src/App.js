@@ -10,6 +10,7 @@ import About from "./pages/about"
 function App() {
   const [products, setProducts] = useState([]);
   const [basket, setBasket] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +38,6 @@ function App() {
     console.log(pushArray);
   };
 
-// addBasketOriginal
   const sumBasket = () => {
     let totalPrice = []
     for (let i = 0; i < basket.length; i++) {
@@ -45,6 +45,10 @@ function App() {
     }
     const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
     return sum
+  }
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
   }
 
   return (
@@ -56,6 +60,7 @@ function App() {
           <NavLinks>
             <NavLink to="/home">Home</NavLink>
             <NavLink to="/about">About</NavLink>
+            <NavLink onClick={toggleModal}>Basket</NavLink>
           </NavLinks>
         </NavBar>
 
@@ -64,16 +69,23 @@ function App() {
           <Route path="/about" element={<About products={products}/>} />
         </Routes>
 
-        <BasketContainer>
-        {basket.map((item, index) => (
-          <BasketItem key={index}>
-            <ProductImage className="basket-image" src={products[item].image} alt={products[item].name} />
-            <ProductName>{products[item].name}</ProductName>
-            <ProductPrice>£{products[item].price}</ProductPrice>
-          </BasketItem>
-        ))}
-        <p>Total: £{sumBasket()}</p>
-      </BasketContainer>
+        {showModal && (
+          <ModalContainer>
+            <ModalContent>
+              <BasketContainer>
+                {basket.map((item, index) => (
+                  <BasketItem key={index}>
+                    <ProductImage className="basket-image" src={products[item].image} alt={products[item].name} />
+                    <ProductName>{products[item].name}</ProductName>
+                    <ProductPrice>£{products[item].price}</ProductPrice>
+                  </BasketItem>
+                ))}
+                <p>Total: £{sumBasket()}</p>
+              </BasketContainer>
+              <CloseButton onClick={toggleModal}>X</CloseButton>
+            </ModalContent>
+          </ModalContainer>
+        )}
     </BrowserRouter>
   </div>
 );}
@@ -121,6 +133,16 @@ const ProductImage = styled.img`
   height: 100px; 
   object-fit: cover;
 `
+
+const ModalContainer = styled.div`
+`
+
+const ModalContent = styled.div`
+`
+
+const CloseButton = styled.button`
+`
+
 const BasketContainer = styled.div`
   display: flex; 
   flex-direction: column; 
