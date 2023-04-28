@@ -10,6 +10,7 @@ import About from "./pages/about"
 function App() {
   const [products, setProducts] = useState([]);
   const [basket, setBasket] = useState([]);
+  const [basket, setBasket] = useState([]);
 
   const Product = ({ image, name, price }) => {
     return (
@@ -18,6 +19,15 @@ function App() {
         <h3>{name}</h3>
         <p>£{price}</p>
       </ProductContainer>
+    );
+  };
+  const Product = ({ image, name, price }) => {
+    return (
+      <div>
+        <img src={image} alt={name} />
+        <h3>{name}</h3>
+        <p>£{price}</p>
+      </div>
     );
   };
 
@@ -55,9 +65,32 @@ function App() {
     const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
     console.log(sum);
   };
+// addBasketOriginal
+  const sumBasket = () => {
+    let totalPrice = []
+    for (let i = 0; i < basket.length; i++) {
+      totalPrice.push(Number(products[basket[i]].price))
+    }
+    const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
+    console.log(sum)
+  }
 
   return (
     <div>
+
+const sumBasket = () => {
+  let totalPrice = []
+  for (let i = 0; i < basket.length; i++) {
+    totalPrice.push(Number(products[basket[i]].price))
+  }
+  const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
+  console.log(sum)
+}
+
+  return (
+    <div>
+    <ProductsWrapper>
+// main
       {products.map((product, index) => (
         <button onClick={() => addBasket(product.name)}>
           <Product key={index} {...product} />
@@ -67,6 +100,13 @@ function App() {
 
       <BrowserRouter>
         <h1>Cats4Lyf</h1>
+// addBasketOriginal
+=======
+    </ProductsWrapper>
+=======
+// main
+    <BrowserRouter>
+      <h1>Cats4Lyf</h1>
 
         <NavBar>
           <NavLinks>
@@ -92,6 +132,8 @@ function App() {
     </BrowserRouter>
   </div>
 );
+    </div>
+  );
 }
 
 export default App;
