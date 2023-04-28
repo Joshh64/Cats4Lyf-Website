@@ -4,16 +4,22 @@ import styled from "styled-components";
 import { faker } from "@faker-js/faker";
 import './App.css';
 
-const App = () => {
-  const [products, setProducts] = useState([]);
-  const [basket, setBasket] = useState([]);
-=======
 import Home from "./pages/home"
 import About from "./pages/about"
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [basket, setBasket] = useState([]);
 
+  const Product = ({ image, name, price }) => {
+    return (
+      <div>
+        <img src={image} alt={name} />
+        <h3>{name}</h3>
+        <p>£{price}</p>
+      </div>
+    );
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +47,19 @@ function App() {
     console.log(basket)
   }
 
+// addBasketOriginal
+  const sumBasket = () => {
+    let totalPrice = []
+    for (let i = 0; i < basket.length; i++) {
+      totalPrice.push(Number(products[basket[i]].price))
+    }
+    const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
+    console.log(sum)
+  }
+
+  return (
+    <div>
+
 const sumBasket = () => {
   let totalPrice = []
   for (let i = 0; i < basket.length; i++) {
@@ -52,14 +71,18 @@ const sumBasket = () => {
 
   return (
     <ProductsWrapper>
+// main
       {products.map((product, index) => (
         <button onClick={() => addBasket(product.name)}>
         <Product key={index} {...product} />
         </button>
       ))}
       <button onClick={() => sumBasket()}>Tally total</button>
+// addBasketOriginal
+=======
     </ProductsWrapper>
 =======
+// main
     <BrowserRouter>
       <h1>Cats4Lyf</h1>
 
@@ -75,6 +98,7 @@ const sumBasket = () => {
         <Route path="/about" element={<About products={products}/>} />
       </Routes>
     </BrowserRouter>
+    </div>
   );
 }
 
