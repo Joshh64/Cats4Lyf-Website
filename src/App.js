@@ -36,8 +36,13 @@ function App() {
     setBasket(pushArray);
     console.log(pushArray);
   };
+  const removeBasket = (input) => {
+    const findIndex = basket.findIndex(index => index.name === input);
+    const spliceArray = [...basket];
+    spliceArray.splice(findIndex, 1)
+    setBasket(spliceArray)
+  };
 
-// addBasketOriginal
   const sumBasket = () => {
     let totalPrice = []
     for (let i = 0; i < basket.length; i++) {
@@ -66,7 +71,7 @@ function App() {
 
         <BasketContainer>
         {basket.map((item, index) => (
-          <BasketItem key={index}>
+          <BasketItem key={index} onClick={() => removeBasket(basket.name)}>
             <ProductImage className="basket-image" src={products[item].image} alt={products[item].name} />
             <ProductName>{products[item].name}</ProductName>
             <ProductPrice>£{products[item].price}</ProductPrice>
