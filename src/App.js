@@ -13,11 +13,11 @@ function App() {
 
   const Product = ({ image, name, price }) => {
     return (
-      <ProductWrapper>
+      <div>
         <img src={image} alt={name} />
         <h3>{name}</h3>
         <p>£{price}</p>
-      </ProductWrapper>
+      </div>
     );
   };
 
@@ -48,24 +48,23 @@ function App() {
     console.log(basket)
   }
 
-const sumBasket = () => {
-  let totalPrice = []
-  for (let i = 0; i < basket.length; i++) {
-    totalPrice.push(Number(products[basket[i]].price))
+  const sumBasket = () => {
+    let totalPrice = []
+    for (let i = 0; i < basket.length; i++) {
+      totalPrice.push(Number(products[basket[i]].price))
+    }
+    const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
+    console.log(sum)
   }
-  const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
-  console.log(sum)
-}
 
   return (
-    <ProductsWrapper>
+    <div>
       {products.map((product, index) => (
         <button onClick={() => addBasket(product.name)}>
         <Product key={index} {...product} />
         </button>
       ))}
       <button onClick={() => sumBasket()}>Tally total</button>
-    </ProductsWrapper>
     <BrowserRouter>
       <h1>Cats4Lyf</h1>
 
@@ -81,6 +80,7 @@ const sumBasket = () => {
         <Route path="/about" element={<About products={products}/>} />
       </Routes>
     </BrowserRouter>
+    </div>
   );
 }
 
