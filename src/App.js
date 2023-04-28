@@ -1,3 +1,5 @@
+// imports
+
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import styled from "styled-components";
@@ -6,6 +8,8 @@ import './App.css';
 
 import Home from "./pages/home"
 import About from "./pages/about"
+
+// app code
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -30,6 +34,12 @@ function App() {
     fetchData();
   }, []);
 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  }
+
+  // basket functionality
+
   const addBasket = (input) => {
     const findIndex = products.findIndex(index => index.name === input);
     const pushArray = [...basket];
@@ -41,8 +51,7 @@ function App() {
     const findIndex = basket.findIndex(index => index.name === input);
     const spliceArray = [...basket];
     spliceArray.splice(findIndex, 1)
-    setBasket(spliceArray)
-    
+    setBasket(spliceArray)  
   };
 
   const sumBasket = () => {
@@ -54,9 +63,7 @@ function App() {
     return sum
   }
 
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  }
+  // website content
 
   return (
     <div>
@@ -95,7 +102,7 @@ function App() {
 
 export default App;
 
-// Styled Components
+// styled components
 
 const NavBar = styled.nav`
   display: flex;
