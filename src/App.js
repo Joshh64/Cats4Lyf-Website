@@ -11,16 +11,6 @@ function App() {
   const [products, setProducts] = useState([]);
   const [basket, setBasket] = useState([]);
 
-  const Product = ({ image, name, price }) => {
-    return (
-      <ProductContainer>
-        <ProductImage src={image} alt={name} />
-        <h3>{name}</h3>
-        <p>£{price}</p>
-      </ProductContainer>
-    );
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       const promises = [];
@@ -41,10 +31,10 @@ function App() {
 
   const addBasket = (input) => {
     const findIndex = products.findIndex(index => index.name === input);
-    const pushArray = basket;
+    const pushArray = [...basket];
     pushArray.push(findIndex);
     setBasket(pushArray);
-    console.log(basket);
+    console.log(pushArray);
   };
 
 // addBasketOriginal
@@ -54,17 +44,11 @@ function App() {
       totalPrice.push(Number(products[basket[i]].price))
     }
     const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
-    console.log(sum)
+    return sum
   }
 
   return (
     <div>
-      {products.map((product, index) => (
-        <button onClick={() => addBasket(product.name)}>
-          <Product key={index} {...product} />
-        </button>
-      ))}
-      <button onClick={() => sumBasket()}>Tally total</button>
     <BrowserRouter>
       <h1>Cats4Lyf</h1>
 
@@ -76,7 +60,7 @@ function App() {
         </NavBar>
 
         <Routes>
-          <Route path="/home" element={<Home products={products} />} />
+          <Route path="/home" element={<Home products={products} addBasket={addBasket} />} />
           <Route path="/about" element={<About products={products}/>} />
         </Routes>
 
@@ -88,6 +72,7 @@ function App() {
             <ProductPrice>£{products[item].price}</ProductPrice>
           </BasketItem>
         ))}
+        <p>Total: £{sumBasket()}</p>
       </BasketContainer>
     </BrowserRouter>
   </div>
@@ -116,10 +101,19 @@ const NavLink = styled(Link)`
   text-decoration: none;
   color: #fff;
   margin-left: 20px;
-
   &:hover {
     text-decoration: underline;
   }
+`
+
+const ProductName = styled.p` 
+  font-size: 16px; 
+  font-weight: bold; 
+  margin-left: 10px;
+`
+const ProductPrice = styled.p` 
+  font-size: 16px; 
+  margin-left: 10px;
 `
 
 const ProductImage = styled.img`
@@ -147,18 +141,3 @@ const BasketItem = styled.div`
     margin-bottom: 10px;
   }
 `
-const ProductName = styled.p` 
-  font-size: 16px; 
-  font-weight: bold; 
-  margin-left: 10px;
-`
-const ProductPrice = styled.p` 
-  font-size: 16px; 
-  margin-left: 10px;
-`
-const ProductContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-items: center;
-`;

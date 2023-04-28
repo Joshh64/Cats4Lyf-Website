@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function Home({ products }) {
+function Home({ products, addBasket }) {
     return (
         <div>
             <h1>This is the Home page</h1>
@@ -10,11 +10,11 @@ function Home({ products }) {
             <h2>To find out more about the bundle of fur you're looking to adopt, check out their profile on the About page</h2>
             <ProductsWrapper>
                 {products.map((product, index) => (
-                <ProductWrapper key={index}>
+                <ProductWrapper key={index} onClick={() => addBasket(product.name)}>
                 <img src={product.image} alt={product.name} />
                 <h3>{product.name}</h3>
                 <p>£{product.price}</p>
-            </ProductWrapper>
+                </ProductWrapper>
         ))}
             </ProductsWrapper>
         </div>
@@ -49,5 +49,9 @@ const ProductWrapper = styled.div`
   p {
     margin-top: 5px;
     font-size: 16px;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 `;
