@@ -4,6 +4,7 @@ import { faker } from '@faker-js/faker';
 
 const App = () => {
   const [products, setProducts] = useState([]);
+  const [basket, setBasket] = useState([]);
 
   const Product = ({ image, name, price }) => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
       </ProductWrapper>
     );
   };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,11 +35,31 @@ const App = () => {
     fetchData();
   }, []);
 
+  const addBasket = (input) => {
+    const findIndex = products.findIndex(index => index.name === input);
+    const pushArray = basket
+    pushArray.push(findIndex)
+    setBasket(pushArray)
+    console.log(basket)
+  }
+
+const sumBasket = () => {
+  let totalPrice = []
+  for (let i = 0; i < basket.length; i++) {
+    totalPrice.push(Number(products[basket[i]].price))
+  }
+  const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
+  console.log(sum)
+}
+
   return (
     <ProductsWrapper>
       {products.map((product, index) => (
+        <button onClick={() => addBasket(product.name)}>
         <Product key={index} {...product} />
+        </button>
       ))}
+      <button onClick={() => sumBasket()}>Tally total</button>
     </ProductsWrapper>
   );
 };
