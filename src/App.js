@@ -42,6 +42,7 @@ function App() {
     const spliceArray = [...basket];
     spliceArray.splice(findIndex, 1)
     setBasket(spliceArray)
+    
   };
 
   const sumBasket = () => {
@@ -75,33 +76,19 @@ function App() {
           <Route path="/about" element={<About products={products}/>} />
         </Routes>
 
-        <BasketContainer>
-        {basket.map((item, index) => (
-          <BasketItem key={index}>
-            <ProductImage className="basket-image" src={products[item].image} alt={products[item].name} />
-            <ProductName>{products[item].name}</ProductName>
-            <ProductPrice>£{products[item].price}</ProductPrice>
-            <button onClick={() => removeBasket(basket.name)}>Remove</button>
-          </BasketItem>
-        ))}
-        <p>Total: £{sumBasket()}</p>
-      </BasketContainer>
-        {showModal && (
-          <ModalContainer>
-            <ModalContent>
+        {showModal ? (
               <BasketContainer>
                 {basket.map((item, index) => (
                   <BasketItem key={index}>
                     <ProductImage className="basket-image" src={products[item].image} alt={products[item].name} />
                     <ProductName>{products[item].name}</ProductName>
                     <ProductPrice>£{products[item].price}</ProductPrice>
+                    <button onClick={() => removeBasket(basket.name)}>Remove</button>
                   </BasketItem>
                 ))}
+                <p>Total: £{sumBasket()}</p>
               </BasketContainer>
-              <CloseButton onClick={toggleModal}>X</CloseButton>
-            </ModalContent>
-          </ModalContainer>
-        )}
+              ) : null}
     </BrowserRouter>
   </div>
 );}
@@ -148,15 +135,6 @@ const ProductImage = styled.img`
   width: 100px; 
   height: 100px; 
   object-fit: cover;
-`
-
-const ModalContainer = styled.div`
-`
-
-const ModalContent = styled.div`
-`
-
-const CloseButton = styled.button`
 `
 
 const BasketContainer = styled.div`
