@@ -47,6 +47,13 @@ function App() {
     return sum
   }
 
+  const removeBasket = (input) => {
+    const findIndex = basket.findIndex(index => index.name === input);
+    const spliceArray = [...basket];
+    spliceArray.splice(findIndex, 1)
+    setBasket(spliceArray)
+  };
+
   const toggleModal = () => {
     setShowModal(!showModal);
   }
@@ -78,6 +85,7 @@ function App() {
                     <ProductImage className="basket-image" src={products[item].image} alt={products[item].name} />
                     <ProductName>{products[item].name}</ProductName>
                     <ProductPrice>£{products[item].price}</ProductPrice>
+                    <RemoveItem onClick={() => removeBasket(basket.name)}>Remove</RemoveItem>
                   </BasketItem>
                 ))}
                 <p>Total: £{sumBasket()}</p>
@@ -162,4 +170,6 @@ const BasketItem = styled.div`
   img {
     margin-bottom: 10px;
   }
+`
+const RemoveItem = styled.button`
 `
