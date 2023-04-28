@@ -21,7 +21,6 @@ function App() {
     );
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       const promises = [];
@@ -48,6 +47,7 @@ function App() {
     console.log(basket)
   }
 
+// addBasketOriginal
   const sumBasket = () => {
     let totalPrice = []
     for (let i = 0; i < basket.length; i++) {
@@ -59,12 +59,30 @@ function App() {
 
   return (
     <div>
+
+const sumBasket = () => {
+  let totalPrice = []
+  for (let i = 0; i < basket.length; i++) {
+    totalPrice.push(Number(products[basket[i]].price))
+  }
+  const sum = totalPrice.reduceRight((acc, cur) => acc + cur, 0);
+  console.log(sum)
+}
+
+  return (
+    <ProductsWrapper>
+// main
       {products.map((product, index) => (
         <button onClick={() => addBasket(product.name)}>
         <Product key={index} {...product} />
         </button>
       ))}
       <button onClick={() => sumBasket()}>Tally total</button>
+// addBasketOriginal
+=======
+    </ProductsWrapper>
+=======
+// main
     <BrowserRouter>
       <h1>Cats4Lyf</h1>
 
